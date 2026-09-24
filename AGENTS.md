@@ -75,4 +75,4 @@ The lead owns the verdict. Resolve material objections or explain their rejectio
 
 Desktop runs the local agent with a Fusion sidekick, subagents including plugin subagents, and skills from `~/.agents/skills/` and plugins. Permission mode is `smart`; ask rather than widening permissions to avoid prompts.
 
-Cloud runs one Devin on an isolated VM. No sidekick, plugin subagents, or hooks load there, and `~/.agents/skills/` is absent; personal skills come from the `agent-skills` and `bro` plugins. Repositories add their own `AGENTS.md`, `.devin/`, and `.agents/skills/`.
+Cloud runs on an isolated VM and can also run in Fusion mode. Plugin subagents and hooks do not load there, and `~/.agents/skills/` is absent; personal skills come from the `agent-skills` and `bro` plugins. Repositories add their own `AGENTS.md`, `.devin/`, and `.agents/skills/`.
