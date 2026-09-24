@@ -1,10 +1,10 @@
 ---
 name: reviewer
 description: Fresh-context adversarial review of a change against its brief. Runs checks, never edits. Pass the request, corrections, constraints, the change scope (base ref, commit range, or files), and verification evidence.
-model: codex
+model: gpt
 allowed-tools:
   - exec
-  - glob
+  - find_file_by_name
   - grep
   - read
 ---
