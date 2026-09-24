@@ -59,13 +59,13 @@ The lead owns requirements, integration, verification, decisions, and commits. D
 
 Brief workers with the goal, constraints, done-criteria, and the narrowest verification commands that cover the change. User corrections update every active brief. Collect diffs, test output, and artifact paths; prose is a claim, not evidence. Review every delegated diff before it lands.
 
-Model and effort are session settings from the Fusion picker; subagent profiles pin a model only. Do not route per task. After rejected work, decide whether the failure concerns intent, implementation, or evidence and correct the brief; more compute does not repair a misunderstood task.
+Model and effort are session settings from the Fusion picker, and subagent profiles set their own model. Do not route per task. After rejected work, decide whether the failure concerns intent, implementation, or evidence and correct the brief; more compute does not repair a misunderstood task.
 
 ## Acceptance
 
 Define the intended outcome, scope, and acceptance evidence before substantial delegation. When direction is uncertain, gate the plan with a fresh `subagent_general` before expensive implementation. Skip independent review for trivial, low-risk changes when direct inspection and relevant checks establish correctness. Changes to behavior, security, permissions, or data handling still require it.
 
-Reviews are fresh-context, adversarial, and independent of the implementer. With a Claude lead, use `riffingonsoftware:reviewer`, a Codex subagent that runs checks but never edits; if it reports denied commands, resume it in the foreground. Otherwise, or when it is not loaded (cloud sessions load no plugin subagents), review the diff in a fresh pass against the brief and name the same-family fallback in the review summary and final response. Require evidence, locations, impact, and remedies; no findings is valid.
+Reviews are fresh-context, adversarial, and independent of the implementer. With a Claude lead, use `riffingonsoftware:reviewer`, a GPT subagent that runs checks but never edits; if it reports denied commands, resume it in the foreground. Otherwise, or when it is not loaded (cloud sessions load no plugin subagents), review the diff in a fresh pass against the brief and name the same-family fallback in the review summary and final response. Require evidence, locations, impact, and remedies; no findings is valid.
 
 Give the reviewer the original request, subsequent corrections, constraints, the change scope (base ref, commit range, or files), and verification evidence. Check intent fidelity, scope discipline, product quality, and whether the evidence supports completion. Return material blockers and the smallest adequate remedies; distinguish defects, missing evidence, and preferences. Accept good work without inventing improvements.
 
