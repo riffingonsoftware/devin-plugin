@@ -73,6 +73,6 @@ The lead owns the verdict. Resolve material objections or explain their rejectio
 
 ## Surfaces
 
-Desktop runs the local agent with a Fusion sidekick, subagents including plugin subagents, and global skills from `~/.agents/skills/`. Permission mode is `smart`; ask rather than widening permissions to avoid prompts.
+Desktop runs the local agent with a Fusion sidekick, subagents including plugin subagents, and skills from `~/.agents/skills/` and plugins. Permission mode is `smart`; ask rather than widening permissions to avoid prompts.
 
-Cloud runs one Devin on an isolated VM. No sidekick, plugin subagents, hooks, or global skills load there; use the repositories' `AGENTS.md`, `.devin/`, and `.agents/skills/`.
+Cloud runs one Devin on an isolated VM. No sidekick, plugin subagents, or hooks load there, and `~/.agents/skills/` is absent; personal skills come from the `agent-skills` and `bro` plugins. Repositories add their own `AGENTS.md`, `.devin/`, and `.agents/skills/`.

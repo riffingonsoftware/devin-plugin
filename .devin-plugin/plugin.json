@@ -1,4 +1,12 @@
 {
   "name": "riffingonsoftware",
-  "description": "Personal Devin rules and review subagent"
+  "description": "Personal Devin rules, review subagent, and skills",
+  "requiredPlugins": [
+    {
+      "source": "git-subdir",
+      "url": "https://github.com/riffingonsoftware/agent-skills.git",
+      "path": "skills"
+    },
+    "backnotprop/bro"
+  ]
 }
