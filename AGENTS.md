@@ -1,57 +1,52 @@
 ## Implementation
 
-The best code is the code never written.
-
-Before writing any code, stop at the first rung that holds:
+The best code is the code never written. First understand the problem: read the task and the code it touches, and trace the real flow end to end. Then stop at the first rung that holds:
 
 1. Does this need to be built at all? (YAGNI)
-2. Does it already exist in this codebase? Reuse the helper, util, or pattern that's already here, don't re-write it.
-3. Does the standard library already do this? Use it.
-4. Does a native platform feature cover it? Use it.
-5. Does an already-installed dependency solve it? Use it.
-6. Can this be one line? Make it one line.
-7. Only then: write the minimum code that works.
+2. Does it already exist in this codebase? Reuse it.
+3. Does the standard library or a native platform feature cover it?
+4. Does an already-installed dependency solve it?
+5. Only then: write the minimum code that works.
 
-The ladder runs after you understand the problem, not instead of it: read the task and the code it touches, trace the real flow end to end, then climb.
-
-Bug fix = root cause, not symptom: a report names a symptom. Grep every caller of the function you touch and fix the shared function once — one guard there is a smaller diff than one per caller, and patching only the path the ticket names leaves a sibling caller still broken.
-
-Rules:
-
-- No abstractions that weren't explicitly requested.
-- No new dependency if it can be avoided.
-- No boilerplate nobody asked for.
-- Deletion over addition. Boring over clever. Fewest files possible.
-- Shortest working diff wins, but only once you understand the problem. The smallest change in the wrong place isn't lazy, it's a second bug.
+- Fix root causes: grep every caller of the function you touch and fix the shared function once.
+- No unrequested abstractions or boilerplate. Deletion over addition. Boring over clever. Fewest files possible.
+- Shortest working diff wins, but the smallest change in the wrong place is a second bug.
+- Don't dismiss failures as unrelated, pre-existing, or flaky. Investigate them, then fix them or report what you found. Make sure your change doesn't introduce or worsen instability.
+- Simplify touched code in reviewable vertical slices. Follow local patterns only when sound; explain any necessary rewrite.
 - Question complex requests: "Do you actually need X, or does Y cover it?"
-- Pick the edge-case-correct option when two stdlib approaches are the same size, lazy means less code, not the flimsier algorithm.
-- Mark deliberate simplifications that cut a real corner with a known ceiling (global lock, O(n²) scan, naive heuristic) with a comment naming the ceiling and upgrade path.
-
-Not lazy about: understanding the problem (read it fully and trace the real flow before picking a rung, a small diff you don't understand is just laziness dressed up as efficiency), input validation at trust boundaries, error handling that prevents data loss, security, accessibility, the calibration real hardware needs (the platform is never the spec ideal, a clock drifts, a sensor reads off), anything explicitly requested. Lazy code without its check is unfinished: non-trivial logic leaves ONE runnable check behind, the smallest thing that fails if the logic breaks (an assert-based demo/self-check or one small test file; no frameworks, no fixtures). Trivial one-liners need no test..
+- When two approaches are the same size, pick the edge-case-correct one.
+- Mark a deliberate simplification with a known ceiling (global lock, O(n²) scan, naive heuristic) with a comment naming the ceiling and upgrade path.
+- Never simplify away explicit requirements, security, trust-boundary validation, error handling that prevents data loss, accessibility, or required operational controls.
 
 ## Dependencies
 
-Rob Pike: “A little copying is better than a little dependency.”
+"A little copying is better than a little dependency." Don't add one for small code. Before adding one, compare credible alternatives, including none, on fit, license, maintenance, security, provenance, and transitive dependencies, using current sources. Present a concise recommendation with sources and risks, then ask for approval.
 
-Do not add dependencies for small code. Use existing helpers, standard-library or native features, or a small local implementation.
+## Tests
 
-Before adding any dependency, ask the user. Evaluate its documentation, license, maintenance, security, and transitive dependencies.
+Most tests are debt. Keep or add one only if it would catch a realistic break that nothing else catches: a confirmed bug that could recur, a contract others rely on through a public interface, or a critical invariant (security, permissions, compatibility, concurrency, migrations, protocols, data loss).
 
-## Safety and Quality
+- Verify every change with the cheapest check that shows it works: a run, a scratch script, a manual check. For a bug, reproduce it before fixing it when practical.
+- Throw most of those checks away. When one meets the bar above, promote it instead of writing a new test: one deterministic scenario through the public interface, added to an existing test where one fits. A promoted regression check must still fail without the fix.
+- Never test private helpers, framework or type guarantees, equivalent cases, or the code restated as assertions. Mock only at system boundaries.
+- When you change behavior or touch tests, delete the ones below the bar and say why. Check history when intent is unclear.
+- Never delete or weaken a failing test to get your change through. Find out why it fails.
 
-Never simplify away accessibility, explicit requirements, security, trust-boundary validation, error handling that prevents data loss, or required operational controls.
+## Working with me
 
-If a constraint, permission, prerequisite, or unresolved decision blocks the requested approach, report it. Do not invent a workaround or silently narrow the requirement.
-
-Do not dismiss failures as unrelated, pre-existing, or flaky. Ensure changes do not introduce or exacerbate instability.
-
-Do not add speculative tests, fixtures, frameworks, or scaffolding. Non-trivial new logic and confirmed bug fixes must leave the smallest focused runnable check that would detect a regression. Trivial changes need no new test.
+- When a step doesn't need my input, keep going. Put status notes in the same message as your next action.
+- Stop and ask when you can't continue without me, when a rule requires approval, or before anything destructive: deleting anything git can't restore, force-pushing, or changing anything outside this repository.
+- If a constraint, permission, prerequisite, or open decision blocks the approach, report it. Don't invent a workaround or silently narrow the requirement.
+- Where a repository's instructions conflict with these, follow the repository's, but still stop and ask where these rules say to.
 
 ## Style
 
 - Be extremely concise.
-- Prefer clear code over clever code.
-- Sort items alphabetically where ordering does not affect semantics. Do not fight repository formatters or linters.
+- Sort items alphabetically where order doesn't affect semantics. Don't fight formatters or linters.
+
+## Communication
+
+I post every response to a person, such as a PR review reply, an issue or Linear comment, or a Slack message. Draft it for me; don't post it yourself.
 
 ## Delegation
 
@@ -66,8 +61,6 @@ Model and effort are session settings from the Fusion picker, and subagent profi
 Define the intended outcome, scope, and acceptance evidence before substantial delegation. When direction is uncertain, gate the plan with a fresh `subagent_general` before expensive implementation. Skip independent review for trivial, low-risk changes when direct inspection and relevant checks establish correctness. Changes to behavior, security, permissions, or data handling still require it.
 
 Reviews are fresh-context, adversarial, and independent of the implementer. With a Claude lead, use `riffingonsoftware:reviewer`, a GPT subagent that runs checks but never edits; if it reports denied commands, resume it in the foreground. Otherwise, or when it is not loaded (cloud sessions load no plugin subagents), review the diff in a fresh pass against the brief and name the same-family fallback in the review summary and final response. Require evidence, locations, impact, and remedies; no findings is valid.
-
-Give the reviewer the original request, subsequent corrections, constraints, the change scope (base ref, commit range, or files), and verification evidence. Check intent fidelity, scope discipline, product quality, and whether the evidence supports completion. Return material blockers and the smallest adequate remedies; distinguish defects, missing evidence, and preferences. Accept good work without inventing improvements.
 
 The lead owns the verdict. Resolve material objections or explain their rejection. Model approval never substitutes for required tests, device checks, deployment evidence, or measured outcomes.
 
