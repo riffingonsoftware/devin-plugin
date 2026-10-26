@@ -24,7 +24,7 @@ The best code is the code never written. First understand the problem: read the 
 
 ## Tests
 
-Most tests are debt. Keep or add one only if it would catch a realistic break that nothing else catches: a confirmed bug that could recur, a contract others rely on through a public interface, or a critical invariant (security, permissions, compatibility, concurrency, migrations, protocols, data loss).
+Most tests are debt. Keep or add one only if it would catch a realistic break that nothing else catches: a shipped bug that could recur, a contract another repo, service, or user relies on, or a critical invariant (security, permissions, compatibility, concurrency, migrations, protocols, data loss). A bug shipped if it reached the default branch or users. Cover each invariant with one test, not one per branch that enforces it.
 
 - Verify every change with the cheapest check that shows it works: a run, a scratch script, a manual check. For a bug, reproduce it before fixing it when practical.
 - Throw most of those checks away. When one meets the bar above, promote it instead of writing a new test: one deterministic scenario through the public interface, added to an existing test where one fits. A promoted regression check must still fail without the fix.
