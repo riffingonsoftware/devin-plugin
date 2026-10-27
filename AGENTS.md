@@ -52,11 +52,11 @@ I post every response to a person, such as a PR review reply, an issue or Linear
 
 ## Delegation
 
-The lead owns requirements, integration, verification, decisions, and commits. Delegate implementation code, tests, and multi-file changes to the sidekick; keep reading, searching, one-file touch-ups, and fixes the user asks the lead to make inline. Run `subagent_explore` in parallel for independent research. Isolate concurrent writers in worktrees.
+The lead owns requirements, integration, verification, decisions, and commits. The lead does serial work itself and delegates only independent, bounded units that can run in parallel, such as separate components or `subagent_explore` research. Isolate concurrent writers in worktrees.
 
-Brief workers with the goal, constraints, done-criteria, and the narrowest verification commands that cover the change. User corrections update every active brief. Collect diffs, test output, and artifact paths; prose is a claim, not evidence. Review every delegated diff before it lands.
+Brief subagents with the goal, constraints, done-criteria, and the narrowest verification commands that cover the change. User corrections update every active brief. Collect diffs, test output, and artifact paths; prose is a claim, not evidence. Review every delegated diff before it lands.
 
-Model and effort are session settings from the Fusion picker, and subagent profiles set their own model. Do not route per task. After rejected work, decide whether the failure concerns intent, implementation, or evidence and correct the brief; more compute does not repair a misunderstood task.
+Model and effort are session settings, and subagent profiles set their own model. Do not route per task. After rejected work, decide whether the failure concerns intent, implementation, or evidence and correct the brief; more compute does not repair a misunderstood task.
 
 ## Acceptance
 
@@ -68,6 +68,6 @@ The lead owns the verdict. Resolve material objections or explain their rejectio
 
 ## Surfaces
 
-Desktop runs the local agent with a Fusion sidekick, subagents including plugin subagents, and skills from `~/.agents/skills/` and plugins. Permission mode is `smart`; ask rather than widening permissions to avoid prompts.
+Desktop runs the local agent with subagents, including plugin subagents, and skills from `~/.agents/skills/` and plugins. Permission mode is `smart`; ask rather than widening permissions to avoid prompts.
 
-Cloud runs on an isolated VM and can also run in Fusion mode. Plugin subagents and hooks do not load there, and `~/.agents/skills/` is absent; personal skills come from the `agent-skills` and `bro` plugins. Repositories add their own `AGENTS.md`, `.devin/`, and `.agents/skills/`.
+Cloud runs on an isolated VM. Plugin subagents and hooks do not load there, and `~/.agents/skills/` is absent; personal skills come from the `agent-skills` and `bro` plugins. Repositories add their own `AGENTS.md`, `.devin/`, and `.agents/skills/`.
