@@ -22,6 +22,13 @@ The best code is the code never written. First understand the problem: read the 
 
 "A little copying is better than a little dependency." Don't add one for small code. Before adding one, compare credible alternatives, including none, on fit, license, maintenance, security, provenance, and transitive dependencies, using current sources. Present a concise recommendation with sources and risks, then ask for approval.
 
+## Environment
+
+- In Claude Code's Bash, `grep` is a ugrep wrapper: `-v` with `-q` returns the wrong exit code, and long bounded repeats fail. Use `/usr/bin/grep` or `rg` in scripts and conditions.
+- In T3 Code, when WebFetch gets a 403, read the page in the preview instead (`preview_open`, then `preview_evaluate` on `document.body.innerText`) and close the tab afterward. Don't retry or spoof a user agent.
+- T3 Code is open source (github.com/pingdotgg/t3code; user docs in `docs/user/`). Answer questions about it from a shallow clone, and check releases and PRs merged in the last week before building around it.
+- To wait on CI for a commit pushed without a PR, find the run with `gh run list --commit "$(git rev-parse HEAD)"` (a short SHA silently matches nothing), retrying for about a minute. If none appears, that commit has no CI. Then run `gh run watch <id> --exit-status` in the background.
+
 ## Tests
 
 Most tests are debt. Keep or add one only if it would catch a realistic break that nothing else catches: a shipped bug that could recur, a contract another repo, service, or user relies on, or a critical invariant (security, permissions, compatibility, concurrency, migrations, protocols, data loss). A bug shipped if it reached the default branch or users. Cover each invariant with one test, not one per branch that enforces it.
@@ -30,12 +37,13 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 - Throw most of those checks away. When one meets the bar above, promote it instead of writing a new test: one deterministic scenario through the public interface, added to an existing test where one fits. A promoted regression check must still fail without the fix.
 - Never test private helpers, framework or type guarantees, equivalent cases, or the code restated as assertions. Mock only at system boundaries.
 - When you change behavior or touch tests, delete the ones below the bar and say why. Check history when intent is unclear.
+- Before repairing a flaky test, or a failing one your change didn't break, check it against the bar. If it falls below, rule out a bug in the code it covers, then delete it, or propose deleting it if someone else wrote it.
 - Never delete or weaken a failing test to get your change through. Find out why it fails.
 
 ## Working with me
 
 - When a step doesn't need my input, keep going. Put status notes in the same message as your next action.
-- Stop and ask when you can't continue without me, when a rule requires approval, or before anything destructive: deleting anything git can't restore, force-pushing, or changing anything outside this repository.
+- Stop and ask when you can't continue without me, when a rule requires approval, or before anything destructive: changing anything outside this repository that I didn't ask for, deleting anything git can't restore, or force-pushing.
 - If a constraint, permission, prerequisite, or open decision blocks the approach, report it. Don't invent a workaround or silently narrow the requirement.
 - Change only the behavior I asked for. Propose any other behavior change, such as a widened trigger, a softened verb, removed content, or a new limit, as its own decision.
 - Number every list of findings, options, or decisions for ease of reference. When something needs more than one decision from me, walk through the decisions one at a time, each with its tradeoffs and your recommendation.
@@ -49,6 +57,16 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 ## Communication
 
 I post every response to a person, such as a PR review reply, an issue or Linear comment, or a Slack message. Draft it for me; don't post it yourself.
+
+## AWS and EKS debugging
+
+Before any `aws` or `kubectl` command against a Keycard cell, run `keycard-readonly-connect <cell>` with up to a 10-minute timeout; it can wait on me to connect NordLayer or approve a browser login. Errors name AWS accounts, not cells: find the cell whose `awsAccountId` matches in `~/projects/infra/helm/cells/cells.yaml`. Pass the `--profile` and `--context` it prints to every `aws` and `kubectl` command.
+
+Stay read-only by default. Switch to a role that can write only when I grant it for the current task: run `~/projects/infra/stacks/workload-core/scripts/eks-connect` with the role I name, pass that role's profile and context explicitly instead, and change only what I approved. Otherwise, give me the command to run.
+
+## Keycard code
+
+Unless the task names a revision, read Keycard code at the freshly fetched remote default branch; local checkouts in `~/projects` lag by weeks. To explain what a service did, read the commit it ran at the time, from the SHA in Datadog's `git.commit.sha` or `version` tag.
 
 ## Delegation
 
