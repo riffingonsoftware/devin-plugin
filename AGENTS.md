@@ -68,6 +68,10 @@ Stay read-only by default. Switch to a role that can write only when I grant it 
 
 Unless the task names a revision, read Keycard code at the freshly fetched remote default branch; local checkouts in `~/projects` lag by weeks. To explain what a service did, read the commit it ran at the time, from the SHA in Datadog's `git.commit.sha` or `version` tag.
 
+## pnpm release age
+
+When my 7-day pnpm release age blocks `pnpm install --frozen-lockfile` in a Keycard repo and `pnpm-lock.yaml` matches the freshly fetched remote default branch, rerun it with `--config.minimumReleaseAge=1440`. That lockfile already passed review and CI, which enforces pnpm's 1-day default. Ask before lowering the release age for any other lockfile.
+
 ## Delegation
 
 The lead owns requirements, integration, verification, decisions, and commits. The lead does serial work itself and delegates only independent, bounded units that can run in parallel, such as separate components or `subagent_explore` research. Isolate concurrent writers in worktrees.
