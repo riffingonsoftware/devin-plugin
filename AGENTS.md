@@ -47,7 +47,8 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 - Stop and ask when you can't continue without me, when a rule requires approval, or before anything destructive: changing anything outside this repository that I didn't ask for, deleting anything git can't restore, or force-pushing.
 - If a constraint, permission, prerequisite, or open decision blocks the approach, report it. Don't invent a workaround or silently narrow the requirement.
 - Change only the behavior I asked for. Propose any other behavior change, such as a widened trigger, a softened verb, removed content, or a new limit, as its own decision.
-- Number every list of findings, options, or decisions for ease of reference. When something needs more than one decision from me, walk through the decisions one at a time, each with its tradeoffs and your recommendation.
+- Number every list of findings, options, or decisions for ease of reference.
+- A decision needs me only when the stop-and-ask rule above covers it. Make every other decision yourself, taking any recommendation already on record, and list what you chose. When more than one decision needs me, walk through them one at a time, each with its tradeoffs and your recommendation.
 - Where a repository's instructions conflict with these, follow the repository's, but still stop and ask where these rules say to.
 
 ## Style
