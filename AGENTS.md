@@ -25,10 +25,12 @@ The best code is the code never written. First understand the problem: read the 
 ## Environment
 
 - In Claude Code's Bash, `grep` is a ugrep wrapper: `-v` with `-q` returns the wrong exit code, and long bounded repeats fail. Use `/usr/bin/grep` or `rg` in scripts and conditions.
+- In Claude Code's Bash on Windows, `\\` reaches the shell as `\`, even inside quotes and heredocs. Write text with backslash escapes with the Edit or Write tools, or build backslashes with `chr(92)` in Python.
 - In T3 Code, read x.com posts, and any page where WebFetch gets a 402 or 403, in the preview (`preview_open`, then `preview_evaluate` on `document.body.innerText`) and close the tab afterward. Don't retry or spoof a user agent.
 - Pass project secrets to commands with `fnox exec`; never print a value. Where a checkout has an untracked `fnox.local.toml` from fnox-cache, fnox reads the keychain instead of prompting 1Password; copy that file into a git worktree before using fnox there. If fnox hangs or times out on 1Password, or a secret is missing, stop and ask me. Don't retry, call `op`, or run fnox-cache yourself.
 - T3 Code is open source (github.com/pingdotgg/t3code; user docs in `docs/user/`). Answer questions about it from a shallow clone, and check releases and PRs merged in the last week before building around it.
-- To wait on CI for a commit pushed without a PR, find the run with `gh run list --commit "$(git rev-parse HEAD)"` (a short SHA silently matches nothing), retrying for about a minute. If none appears, that commit has no CI. Then run `gh run watch <id> --exit-status` in the background.
+- After `t3_thread_launch`, wait for the thread with `t3_thread_wait` and read its result with `t3_thread_read`; never ask me to relay its report.
+- To wait on CI for a commit pushed without a PR, run `gh-watch-commit` in the background. It exits nonzero if a run fails, and says when the commit has no CI.
 
 ## Tests
 
@@ -54,6 +56,7 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 ## Style
 
 - Be extremely concise.
+- Give times in my local timezone, from `date`; add UTC in parentheses only to match logs.
 - Sort items alphabetically where order doesn't affect semantics. Don't fight formatters or linters.
 
 ## Communication
