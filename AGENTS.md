@@ -9,10 +9,11 @@ The best code is the code never written. First understand the problem: read the 
 5. Only then: write the minimum code that works.
 
 - Fix root causes: grep every caller of the function you touch and fix the shared function once.
-- No unrequested abstractions or boilerplate. Deletion over addition. Boring over clever. Fewest files possible.
-- Shortest working diff wins, but the smallest change in the wrong place is a second bug.
+- No speculative abstractions or boilerplate. Deletion over addition. Boring over clever. Fewest files possible.
+- Least code after the change wins, not the shortest diff, but the smallest change in the wrong place is a second bug.
 - Don't dismiss failures as unrelated, pre-existing, or flaky. Investigate them, then fix them or report what you found. Make sure your change doesn't introduce or worsen instability.
-- Simplify touched code in reviewable vertical slices. Follow local patterns only when sound; explain any necessary rewrite.
+- Before you copy code that already exists, merge it into one shared place instead, as part of the task. Likewise, change anything in the code the task touches, including its structure and architecture, when that leaves less or clearer code. Don't ask first; only behavior changes and what other rules gate need my approval. Follow local patterns only when sound, and explain any rewrite. When you commit, put structural changes in their own commit.
+- Stay on task: explore only code the task reads, changes, calls, or copies from. Report problems elsewhere instead of fixing them.
 - Question complex requests: "Do you actually need X, or does Y cover it?"
 - When two approaches are the same size, pick the edge-case-correct one.
 - Mark a deliberate simplification with a known ceiling (global lock, O(n²) scan, naive heuristic) with a comment naming the ceiling and upgrade path.
