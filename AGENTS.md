@@ -21,11 +21,11 @@ The best code is the code never written. First understand the problem: read the 
 
 ## Dependencies
 
-"A little copying is better than a little dependency." Don't add one for small code. Before adding one, compare credible alternatives, including none, on fit, license, maintenance, security, provenance, and transitive dependencies, using current sources. Present a concise recommendation with sources and risks, then ask for approval.
+"A little copying is better than a little dependency." Don't add one for small code. Before adding one, compare credible alternatives, including none, on fit, license, maintenance, security, provenance, and transitive dependencies, using current sources. For a GitHub project, include its OpenSSF Scorecard from `https://api.securityscorecards.dev/projects/github.com/<owner>/<repo>`; a 404 means unscanned, not unsafe. Present a concise recommendation with sources and risks, then ask for approval.
 
 ## Environment
 
-- In Claude Code's Bash, `grep` is a ugrep wrapper: `-v` with `-q` returns the wrong exit code, and long bounded repeats fail. Use `/usr/bin/grep` or `rg` in scripts and conditions.
+- In Claude Code's Bash, `grep` is a ugrep wrapper: `-v` with `-q` returns the wrong exit code, and long bounded repeats fail. Use `rg`, or `/usr/bin/grep` where you need grep's syntax.
 - In Claude Code's Bash on Windows, `\\` reaches the shell as `\`, even inside quotes and heredocs. Write text with backslash escapes with the Edit or Write tools, or build backslashes with `chr(92)` in Python.
 - In T3 Code, read x.com posts, and any page where WebFetch gets a 402 or 403, in the preview (`preview_open`, then `preview_evaluate` on `document.body.innerText`) and close the tab afterward. Don't retry or spoof a user agent.
 - Pass project secrets to commands with `fnox exec`; never print a value. Where a checkout has an untracked `fnox.local.toml` from fnox-cache, fnox reads the keychain instead of prompting 1Password; copy that file into a git worktree before using fnox there. If fnox hangs or times out on 1Password, or a secret is missing, stop and ask me. Don't retry, call `op`, or run fnox-cache yourself.
@@ -51,6 +51,7 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 - If a constraint, permission, prerequisite, or open decision blocks the approach, report it. Don't invent a workaround or silently narrow the requirement.
 - Change only the behavior I asked for. Propose any other behavior change, such as a widened trigger, a softened verb, removed content, or a new limit, as its own decision.
 - Number every list of findings, options, or decisions for ease of reference.
+- When you refer back to something from an earlier message, restate it in full: what it is and the details I need to act on it, so I don't have to scroll back.
 - A decision needs me only when the stop-and-ask rule above covers it. Make every other decision yourself, taking any recommendation already on record, and list what you chose. When more than one decision needs me, walk through them one at a time, each with its tradeoffs and your recommendation.
 - Where a repository's instructions conflict with these, follow the repository's, but still stop and ask where these rules say to.
 
@@ -62,7 +63,9 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 
 ## Communication
 
-I post every response to a person, such as a PR review reply, an issue or Linear comment, or a Slack message. Draft it for me; don't post it yourself.
+I handle contact with people: posts, PR review replies, issue or Linear comments, Slack messages, review requests, and pings. Post or request something only when I tell you to in the current task, and only what I approved. Otherwise, draft it and don't offer to post it. While we're still investigating, give me findings, not drafts. For a follow-up, start from the version I posted, not your draft.
+
+In drafts for other people, cite shared sources such as Keycard repos, Linear, PRs, Notion or Slack, never my local notes. Leave Keycard's internal metrics, and internal problems we just need to fix, out of drafts for customers. Use the terms Keycard's docs already use instead of coining new ones.
 
 ## AWS and EKS debugging
 
@@ -72,7 +75,11 @@ Stay read-only by default. Switch to a role that can write only when I grant it 
 
 ## Keycard code
 
-Unless the task names a revision, read Keycard code at the freshly fetched remote default branch; local checkouts in `~/projects` lag by weeks. To explain what a service did, read the commit it ran at the time, from the SHA in Datadog's `git.commit.sha` or `version` tag.
+Unless the task names a revision, read Keycard code at `origin/HEAD` in its checkout under `~/projects`, after `git fetch`; clone it there if it's missing. To explain what a service did, read the commit it ran at the time, from the SHA in Datadog's `git.commit.sha` or `version` tag.
+
+## Dependencies
+
+When proposing a dependency, say where it's already used in Keycard's GitHub orgs (keycardai, keycardlabs). Propose its latest release unless you name a concrete reason not to.
 
 ## pnpm release age
 
