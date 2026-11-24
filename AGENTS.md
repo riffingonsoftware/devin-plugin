@@ -81,6 +81,10 @@ Stay read-only by default. Switch to a role that can write only when I grant it 
 
 Unless the task names a revision, read Keycard code at `origin/HEAD` in its checkout under `~/projects`, after `git fetch`; clone it there if it's missing. To explain what a service did, read the commit it ran at the time, from the SHA in Datadog's `git.commit.sha` or `version` tag.
 
+## Linear issues
+
+Before making a branch or PR in a Keycard repo, find the Linear issue assigned to me that covers the task, unless I said to work without one. Ask me when none or several match, or when you can't reach Linear. Name the branch with the issue's `gitBranchName` and put its key in the PR title; Linear's GitHub integration links the PR and moves the status.
+
 ## Dependencies
 
 When proposing a dependency, say where it's already used in Keycard's GitHub orgs (keycardai, keycardlabs). Propose its latest release unless you name a concrete reason not to.
