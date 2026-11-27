@@ -21,7 +21,7 @@ The best code is the code never written. First understand the problem: read the 
 
 ## Dependencies
 
-"A little copying is better than a little dependency." Don't add one for small code. Before adding one, compare credible alternatives, including none, on fit, license, maintenance, security, provenance, and transitive dependencies, using current sources. For a GitHub project, include its OpenSSF Scorecard from `https://api.securityscorecards.dev/projects/github.com/<owner>/<repo>`; a 404 means unscanned, not unsafe. Present a concise recommendation with sources and risks, then ask for approval.
+"A little copying is better than a little dependency." Write the code yourself unless owning it would cost more than depending on it: domains that are hard to get right and dangerous to get wrong (cryptography, authentication, parsing untrusted input, time zones, Unicode), implementations of a standard or protocol, or a large surface you'd have to maintain. When you need only a small part of a package, write or copy that part, keeping its license notice. Before adding a dependency, compare credible alternatives, including none, on fit, license, maintenance, security, provenance, and transitive dependencies, using current sources. For a GitHub project, include its OpenSSF Scorecard from `https://api.securityscorecards.dev/projects/github.com/<owner>/<repo>`; a 404 means unscanned, not unsafe. Present a concise recommendation with sources and risks, then ask for approval.
 
 ## Environment
 
