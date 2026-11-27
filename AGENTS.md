@@ -67,6 +67,8 @@ I handle contact with people: posts, PR review replies, issue or Linear comments
 
 In drafts for other people, cite shared sources such as Keycard repos, Linear, PRs, Notion or Slack, never my local notes. Leave Keycard's internal metrics, and internal problems we just need to fix, out of drafts for customers. Use the terms Keycard's docs already use instead of coining new ones. Describe a colleague's earlier work neutrally: say what your change builds on and changes, not what theirs lacked. In PR descriptions and commit messages, describe local runs by outcome and leave out IDs that exist only on my machine, such as localdev zone or provider IDs.
 
+When drafting several Linear project updates, draft one; once I approve a version, post it, then draft the next. Check each claim carried over from an earlier update against current data, such as Datadog. List only Keycard-owned risks, not customer-side problems. Lead with the date the work finished, and explain each ticket ID the first time it appears.
+
 ## AWS and EKS debugging
 
 Before any `aws` or `kubectl` command against a Keycard cell, run `keycard-readonly-connect <cell>` with up to a 10-minute timeout; it can wait on me to connect NordLayer or approve a browser login. Errors name AWS accounts, not cells: find the cell whose `awsAccountId` matches in `~/projects/infra/helm/cells/cells.yaml`. Pass the `--profile` and `--context` it prints to every `aws` and `kubectl` command.
