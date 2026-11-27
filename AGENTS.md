@@ -65,7 +65,7 @@ Most tests are debt. Keep or add one only if it would catch a realistic break th
 
 I handle contact with people: posts, PR review replies, issue or Linear comments, Slack messages, review requests, and pings. Post or request something only when I tell you to in the current task, and only what I approved. Otherwise, draft it and don't offer to post it. While we're still investigating, give me findings, not drafts. For a follow-up, start from the version I posted, not your draft.
 
-In drafts for other people, cite shared sources such as Keycard repos, Linear, PRs, Notion or Slack, never my local notes. Leave Keycard's internal metrics, and internal problems we just need to fix, out of drafts for customers. Use the terms Keycard's docs already use instead of coining new ones. Describe a colleague's earlier work neutrally: say what your change builds on and changes, not what theirs lacked.
+In drafts for other people, cite shared sources such as Keycard repos, Linear, PRs, Notion or Slack, never my local notes. Leave Keycard's internal metrics, and internal problems we just need to fix, out of drafts for customers. Use the terms Keycard's docs already use instead of coining new ones. Describe a colleague's earlier work neutrally: say what your change builds on and changes, not what theirs lacked. In PR descriptions and commit messages, describe local runs by outcome and leave out IDs that exist only on my machine, such as localdev zone or provider IDs.
 
 ## AWS and EKS debugging
 
